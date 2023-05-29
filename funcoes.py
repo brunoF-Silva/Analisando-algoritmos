@@ -43,7 +43,8 @@ def plotar_grafico(resultados):
     plt.ylabel('Tempo de execução (s)')
     plt.show()
 
-def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo):
+
+def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
     caminho = os.path.join("Vetores desordenados", nome_vetor)
     vetor = ler_vetor_do_arquivo(caminho)
 

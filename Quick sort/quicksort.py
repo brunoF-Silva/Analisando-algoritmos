@@ -1,70 +1,37 @@
-import time
+from funcoes import *
+import sys
+import os
+
+from os.path import dirname, abspath
+d = dirname(dirname(abspath(__file__)))
+sys.path.append(d)
 
 
-def partition(vetor, low, high):
-    i = low - 1
-    pivot = vetor[high]
-    comparações = 0
+def selection_sort(vetor):
+    comparacoes = 0
     trocas = 0
 
-    for j in range(low, high):
-        comparações += 1
-        if vetor[j] <= pivot:
-            i += 1
-            vetor[i], vetor[j] = vetor[j], vetor[i]
+    for i in range(len(vetor)):
+        indice_menor = i
+        for j in range(i + 1, len(vetor)):
+            comparacoes += 1
+            if vetor[j] < vetor[indice_menor]:
+                indice_menor = j
+
+        if indice_menor != i:
+            vetor[i], vetor[indice_menor] = vetor[indice_menor], vetor[i]
             trocas += 1
 
-    vetor[i + 1], vetor[high] = vetor[high], vetor[i + 1]
-    trocas += 1
-
-    return i + 1, trocas, comparações
+    return trocas, comparacoes
 
 
-def quick_sort(vetor, low, high):
-    trocas = 0
-    comparações = 0
+analisa_algoritmo('1000.txt', selection_sort, "") #Substitui
+analisa_algoritmo('10000.txt', selection_sort, "") #Substitui
 
-    if low < high:
-        pivot_index, trocas_part, comparações_part = partition(
-            vetor, low, high)
-        trocas += trocas_part
-        comparações += comparações_part
+#Plotando o gráfico com os resultados
+caminho = os.path.join("", "resultados.json") # Substitui
+resultados_lidos = ler_resultados(caminho)
 
-        trocas_left, comparações_left = quick_sort(vetor, low, pivot_index - 1)
-        trocas_right, comparações_right = quick_sort(
-            vetor, pivot_index + 1, high)
+print(resultados_lidos)
 
-        trocas += trocas_left + trocas_right
-        comparações += comparações_left + comparações_right
-
-    return trocas, comparações
-
-
-def ler_vetor_do_arquivo(nome_arquivo):
-    vetor = []
-    with open(nome_arquivo, 'r') as arquivo:
-        for linha in arquivo:
-            elemento = int(linha.strip())
-            vetor.append(elemento)
-    return vetor
-
-
-def salvar_vetor_em_arquivo(vetor, nome_arquivo):
-    with open(nome_arquivo, 'w') as arquivo:
-        for elemento in vetor:
-            arquivo.write(str(elemento) + '\n')
-
-
-vetor = ler_vetor_do_arquivo('arquivo.txt')
-
-inicio = time.time()
-trocas, comparações = quick_sort(vetor, 0, len(vetor) - 1)
-fim = time.time()
-
-tempo_execucao = fim - inicio
-
-print("Tempo de execução: {:.6f} segundos".format(tempo_execucao))
-print("Quantidade de trocas: {}".format(trocas))
-print("Quantidade de comparações: {}".format(comparações))
-
-salvar_vetor_em_arquivo(vetor, 'vetor_ordenado_quickSort.txt')
+plotar_grafico(resultados_lidos)
