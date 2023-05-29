@@ -74,5 +74,33 @@ def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #vetor e
         json.dump(resultados, arquivo)
         arquivo.write("\n")
 
-def printa():
-    print("abc")
+
+def analisa_quick_sort(nome_vetor, algoritmo_ordenacao, nome_algoritmo, low, high): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
+    caminho = os.path.join("Vetores desordenados", nome_vetor)
+    vetor = ler_vetor_do_arquivo(caminho)
+
+    inicio = time.time()
+    trocas, comparacoes = algoritmo_ordenacao(vetor, low, high)
+    fim = time.time()
+
+    tempo_execucao = fim - inicio  # tempo de execução
+
+    print(tempo_execucao, "seg &", trocas,"trocas &", comparacoes, "comparações \n")
+
+    caminho = os.path.join(nome_algoritmo, "Vetores ordenados", nome_vetor)
+    salvar_vetor_em_arquivo(vetor, caminho)
+    
+    # Criação dos resultados no formato JSON
+    resultados = {str(len(vetor)): tempo_execucao}
+
+    # Salvando os resultados em um arquivo JSON
+    caminho = os.path.join(nome_algoritmo, "resultados.json")
+
+    if (nome_vetor == '1000.txt'):
+        modo = 'w'
+    else:
+        modo = 'a'
+
+    with open(caminho, modo) as arquivo:
+        json.dump(resultados, arquivo)
+        arquivo.write("\n")
