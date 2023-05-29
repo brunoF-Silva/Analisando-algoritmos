@@ -9,14 +9,19 @@ sys.path.append(d)
 ### algoritmo abaixo
 
 
-
-analisa_algoritmo('1000.txt', _sort, " sort")
-analisa_algoritmo('10000.txt', _sort, " sort")
+nome_algoritmo = "sort"
+analisa_algoritmo('1000.txt', _sort, nome_algoritmo)
+analisa_algoritmo('10000.txt', _sort, nome_algoritmo)
 
 #Plotando o gráfico com os resultados
-caminho = os.path.join(" sort", "resultados.json")
+caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
 resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Tempo de execução (s)")
 
-print(resultados_lidos)
+caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
+resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Trocas")
 
-plotar_grafico(resultados_lidos)
+caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
+resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Comparações")

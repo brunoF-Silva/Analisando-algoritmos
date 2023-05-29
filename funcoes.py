@@ -28,7 +28,7 @@ def ler_resultados(nome_arquivo):
     return resultados
 
 
-def plotar_grafico(resultados):
+def plotar_grafico(resultados, legenda):
     tamanhos = []
     tempos = []
 
@@ -38,13 +38,28 @@ def plotar_grafico(resultados):
             tempos.append(tempo)
 
     plt.plot(tamanhos, tempos, 'b-')
-    plt.title('Tempo de execução em relação ao tamanho da entrada')
+    plt.title(legenda + ' em relação ao tamanho da entrada')
     plt.xlabel('Tamanho da entrada')
-    plt.ylabel('Tempo de execução (s)')
+    plt.ylabel(legenda)
     plt.show()
 
 
-def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
+def cria_json(vetor, nome_algoritmo, nome_vetor, elemento, nome_resultado):
+    # Criação dos resultados no formato JSON
+    resultados = {str(len(vetor)): elemento}
+    # Salvando os resultados em um arquivo JSON
+    caminho = os.path.join(nome_algoritmo, nome_resultado)
+
+    if (nome_vetor == '1000.txt'):
+        modo = 'w'
+    else:
+        modo = 'a'
+
+    with open(caminho, modo) as arquivo:
+        json.dump(resultados, arquivo)
+        arquivo.write("\n")
+
+def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #nome do arquivo do vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
     caminho = os.path.join("Vetores desordenados", nome_vetor)
     vetor = ler_vetor_do_arquivo(caminho)
 
@@ -58,21 +73,11 @@ def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #vetor e
 
     caminho = os.path.join(nome_algoritmo, "Vetores ordenados", nome_vetor)
     salvar_vetor_em_arquivo(vetor, caminho)
-    
-    # Criação dos resultados no formato JSON
-    resultados = {str(len(vetor)): tempo_execucao}
 
-    # Salvando os resultados em um arquivo JSON
-    caminho = os.path.join(nome_algoritmo, "resultados.json")
+    cria_json(vetor, nome_algoritmo, nome_vetor, tempo_execucao, "resultados_tempo.json")
+    cria_json(vetor, nome_algoritmo, nome_vetor, trocas, "resultados_trocas.json")
+    cria_json(vetor, nome_algoritmo, nome_vetor, comparacoes, "resultados_comparacoes.json")
 
-    if (nome_vetor == '1000.txt'):
-        modo = 'w'
-    else:
-        modo = 'a'
-
-    with open(caminho, modo) as arquivo:
-        json.dump(resultados, arquivo)
-        arquivo.write("\n")
 
 
 def analisa_quick_sort(nome_vetor, algoritmo_ordenacao, nome_algoritmo, low, high): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
@@ -90,17 +95,6 @@ def analisa_quick_sort(nome_vetor, algoritmo_ordenacao, nome_algoritmo, low, hig
     caminho = os.path.join(nome_algoritmo, "Vetores ordenados", nome_vetor)
     salvar_vetor_em_arquivo(vetor, caminho)
     
-    # Criação dos resultados no formato JSON
-    resultados = {str(len(vetor)): tempo_execucao}
-
-    # Salvando os resultados em um arquivo JSON
-    caminho = os.path.join(nome_algoritmo, "resultados.json")
-
-    if (nome_vetor == '1000.txt'):
-        modo = 'w'
-    else:
-        modo = 'a'
-
-    with open(caminho, modo) as arquivo:
-        json.dump(resultados, arquivo)
-        arquivo.write("\n")
+    cria_json(vetor, nome_algoritmo, nome_vetor,tempo_execucao, "resultados_tempo.json")
+    cria_json(vetor, nome_algoritmo, nome_vetor,trocas, "resultados_trocas.json")
+    cria_json(vetor, nome_algoritmo, nome_vetor,comparacoes, "resultados_comparacoes.json")

@@ -25,14 +25,22 @@ def selection_sort(vetor):
 
     return trocas, comparacoes
 
-
-analisa_algoritmo('1000.txt', selection_sort, "Selection sort")
-analisa_algoritmo('10000.txt', selection_sort, "Selection sort")
+nome_algoritmo = "Selection sort"
+analisa_algoritmo('1000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('10000.txt', selection_sort, nome_algoritmo)
 
 #Plotando o gráfico com os resultados
-caminho = os.path.join("Selection sort", "resultados.json")
+caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
 resultados_lidos = ler_resultados(caminho)
-
 print(resultados_lidos)
+plotar_grafico(resultados_lidos, "Tempo de execução (s)")
 
-plotar_grafico(resultados_lidos)
+caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
+resultados_lidos = ler_resultados(caminho)
+print(resultados_lidos)
+plotar_grafico(resultados_lidos, "Trocas")
+
+caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
+resultados_lidos = ler_resultados(caminho)
+print(resultados_lidos)
+plotar_grafico(resultados_lidos, "Comparações")

@@ -46,15 +46,20 @@ def quick_sort(vetor, low, high):
 
     return trocas, comparacoes
 
-
+nome_algoritmo = "Quick sort"
 # referência para o quick_sort(vetor, 0, len(vetor) - 1)
-analisa_quick_sort('1000.txt', quick_sort, "Quick sort", 0, 999) #Substitui
-analisa_quick_sort('10000.txt', quick_sort, "Quick sort", 0, 9999) #Substitui
+analisa_quick_sort('1000.txt', quick_sort, nome_algoritmo, 0, 999)
+analisa_quick_sort('10000.txt', quick_sort, nome_algoritmo, 0, 9999)
 
 #Plotando o gráfico com os resultados
-caminho = os.path.join("Quick sort", "resultados.json") # Substitui
+caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
 resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Tempo de execução (s)")
 
-print(resultados_lidos)
+caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
+resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Trocas")
 
-plotar_grafico(resultados_lidos)
+caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
+resultados_lidos = ler_resultados(caminho)
+plotar_grafico(resultados_lidos, "Comparações")
