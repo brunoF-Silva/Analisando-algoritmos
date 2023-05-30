@@ -1,5 +1,4 @@
 import sys
-import os
 
 from os.path import dirname, abspath
 d = dirname(dirname(abspath(__file__)))
@@ -28,6 +27,16 @@ def selection_sort(vetor):
 nome_algoritmo = "Selection sort"
 analisa_algoritmo('1000.txt', selection_sort, nome_algoritmo)
 analisa_algoritmo('10000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('100000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('200000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('300000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('400000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('500000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('600000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('700000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('800000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('900000.txt', selection_sort, nome_algoritmo)
+analisa_algoritmo('1000000.txt', selection_sort, nome_algoritmo)
 
 #Plotando o gráfico com os resultados
 caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")

@@ -1,5 +1,4 @@
 import sys
-import os
 
 from os.path import dirname, abspath
 d = dirname(dirname(abspath(__file__)))
@@ -21,8 +20,18 @@ def bubble_sort(vetor):
     return trocas, comparações
 
 nome_algoritmo = "Bubble sort"
-analisa_algoritmo('1000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('10000.txt', bubble_sort, nome_algoritmo)
+# analisa_algoritmo('1000.txt', bubble_sort, nome_algoritmo)
+# analisa_algoritmo('10000.txt', bubble_sort, nome_algoritmo)
+# analisa_algoritmo('100000.txt', bubble_sort, nome_algoritmo)
+# analisa_algoritmo('200000.txt', bubble_sort, nome_algoritmo)
+#analisa_algoritmo('300000.txt', bubble_sort, nome_algoritmo)
+#analisa_algoritmo('400000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('500000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('600000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('700000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('800000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('900000.txt', bubble_sort, nome_algoritmo)
+analisa_algoritmo('1000000.txt', bubble_sort, nome_algoritmo)
 
 #Plotando o gráfico com os resultados
 caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
