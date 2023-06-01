@@ -1,64 +1,70 @@
 import sys
 
+sys.setrecursionlimit(1000000)
+
 from os.path import dirname, abspath
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 from funcoes import *
+from gerarchart import *
 
-
-def partition(vetor, low, high):
-    i = low - 1
-    pivot = vetor[high]
+def partition(array, start, end):
+    pivot = array[start]
+    low = start + 1
+    high = end
     comparacoes = 0
     trocas = 0
 
-    for j in range(low, high):
-        comparacoes += 1
-        if vetor[j] <= pivot:
-            i += 1
-            vetor[i], vetor[j] = vetor[j], vetor[i]
+    while True:
+        while low <= high and array[high] >= pivot:
+            comparacoes += 1
+            high = high - 1
+
+        while low <= high and array[low] <= pivot:
+            comparacoes += 1
+            low = low + 1
+
+        if low <= high:
+            array[low], array[high] = array[high], array[low]
             trocas += 1
 
-    vetor[i + 1], vetor[high] = vetor[high], vetor[i + 1]
+        else:
+
+            break
+
+    array[start], array[high] = array[high], array[start]
     trocas += 1
 
-    return i + 1, trocas, comparacoes
+    return high, trocas, comparacoes
 
-
-def quick_sort(vetor, low, high):
+def quick_sort(array, start, end):
     trocas = 0
     comparacoes = 0
+    if start >= end:
+        comparacoes += 1
+        return
 
-    if low < high:
-        pivot_index, trocas_part, comparacoes_part = partition(
-            vetor, low, high)
-        trocas += trocas_part
-        comparacoes += comparacoes_part
+    p, trocas_part, comparacoes_part = partition(array, start, end)
+    trocas += trocas_part
+    comparacoes += comparacoes_part
+    quick_sort(array, start, p-1)
+    quick_sort(array, p+1, end)
 
-        trocas_left, comparacoes_left = quick_sort(vetor, low, pivot_index - 1)
-        trocas_right, comparacoes_right = quick_sort(
-            vetor, pivot_index + 1, high)
-
-        trocas += trocas_left + trocas_right
-        comparacoes += comparacoes_left + comparacoes_right
-
+    trocas += 2*trocas
+    comparacoes +=  2*comparacoes
+    
     return trocas, comparacoes
 
+
 nome_algoritmo = "Quick sort"
-# referência para o quick_sort(vetor, 0, len(vetor) - 1)
-analisa_quick_sort('1000.txt', quick_sort, nome_algoritmo, 0, 999)
-analisa_quick_sort('10000.txt', quick_sort, nome_algoritmo, 0, 9999)
+folder_path = './Vetores desordenados'
+metricas = []
 
-#Plotando o gráfico com os resultados
-caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Tempo de execução (s)")
-
-caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Trocas")
-
-caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Comparações")
+for file_name in os.listdir(folder_path):
+    if file_name.endswith('.txt'):
+        file_path = os.path.join(folder_path, file_name)
+        metricas.append(analisa_quick_sort(file_name, quick_sort, nome_algoritmo))
+        
+cria_json(metricas)
+geraCharts()

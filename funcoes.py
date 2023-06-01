@@ -2,15 +2,33 @@ import time
 import json
 import os
 import matplotlib.pyplot as plt
+import mmap
+import json
+
+class Metricas:
+    def __init__(self, trocas, comparacoes, tempo_execucao, nome_algoritmo, nome_vetor):
+        self.trocas = trocas
+        self.comparacoes = comparacoes
+        self.tempo_execucao = tempo_execucao
+        self.nome_algoritmo = nome_algoritmo
+        self.nome_vetor = nome_vetor
 
 
 def ler_vetor_do_arquivo(nome_arquivo):
-    vetor = []
-    with open(nome_arquivo, 'r') as arquivo:
-        for linha in arquivo:
-            elemento = int(linha.strip())
-            vetor.append(elemento)
-    return vetor
+    print("Lendo vetor do arquivo", nome_arquivo)
+    values = []
+    with open(nome_arquivo, 'r') as file:
+        # Obter o tamanho do arquivo
+        file_size = os.fstat(file.fileno()).st_size
+        # Mapear o arquivo na memória
+        file_map = mmap.mmap(file.fileno(), length=file_size, access=mmap.ACCESS_READ)
+        # Decodificar o conteúdo mapeado como uma string
+        content = file_map[:].decode()
+        # Converter as linhas lidas para inteiros
+        values = [int(line.strip()) for line in content.split('\n') if line.strip()]
+        # Fechar o mapeamento do arquivo
+        file_map.close()
+    return values
 
 
 def salvar_vetor_em_arquivo(vetor, nome_arquivo):
@@ -44,19 +62,14 @@ def plotar_grafico(resultados, legenda):
     plt.show()
 
 
-def cria_json(vetor, nome_algoritmo, nome_vetor, elemento, nome_resultado):
+def cria_json(resultados):
     # Criação dos resultados no formato JSON
-    resultados = {str(len(vetor)): elemento}
-    # Salvando os resultados em um arquivo JSON
-    caminho = os.path.join(nome_algoritmo, nome_resultado)
+    dados = []
+    for result in resultados:
+        dados.append(result.__dict__)
 
-    if (nome_vetor == '1000.txt'):
-        modo = 'w'
-    else:
-        modo = 'a'
-
-    with open(caminho, modo) as arquivo:
-        json.dump(resultados, arquivo)
+    with open("resultados.json", 'w') as arquivo:
+        json.dump(dados, arquivo)
         arquivo.write("\n")
 
 def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #nome do arquivo do vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
@@ -70,31 +83,19 @@ def analisa_algoritmo(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #nome do
     tempo_execucao = fim - inicio  # tempo de execução
 
     print(tempo_execucao, "seg &", trocas,"trocas &", comparacoes, "comparações \n")
-
-    caminho = os.path.join(nome_algoritmo, "Vetores ordenados", nome_vetor)
-    salvar_vetor_em_arquivo(vetor, caminho)
-
-    cria_json(vetor, nome_algoritmo, nome_vetor, tempo_execucao, "resultados_tempo.json")
-    cria_json(vetor, nome_algoritmo, nome_vetor, trocas, "resultados_trocas.json")
-    cria_json(vetor, nome_algoritmo, nome_vetor, comparacoes, "resultados_comparacoes.json")
+    return Metricas(trocas, comparacoes, tempo_execucao, nome_algoritmo, nome_vetor)
 
 
 
-def analisa_quick_sort(nome_vetor, algoritmo_ordenacao, nome_algoritmo, low, high): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
+def analisa_quick_sort(nome_vetor, algoritmo_ordenacao, nome_algoritmo): #vetor escolhido, funçao do alogoritmo, nome em maiúsculo da pasta
     caminho = os.path.join("Vetores desordenados", nome_vetor)
     vetor = ler_vetor_do_arquivo(caminho)
 
     inicio = time.time()
-    trocas, comparacoes = algoritmo_ordenacao(vetor, low, high)
+    trocas, comparacoes = algoritmo_ordenacao(vetor, 0, len(vetor)-1)
     fim = time.time()
 
     tempo_execucao = fim - inicio  # tempo de execução
 
     print(tempo_execucao, "seg &", trocas,"trocas &", comparacoes, "comparações \n")
-
-    caminho = os.path.join(nome_algoritmo, "Vetores ordenados", nome_vetor)
-    salvar_vetor_em_arquivo(vetor, caminho)
-    
-    cria_json(vetor, nome_algoritmo, nome_vetor,tempo_execucao, "resultados_tempo.json")
-    cria_json(vetor, nome_algoritmo, nome_vetor,trocas, "resultados_trocas.json")
-    cria_json(vetor, nome_algoritmo, nome_vetor,comparacoes, "resultados_comparacoes.json")
+    return Metricas(trocas, comparacoes, tempo_execucao, nome_algoritmo, nome_vetor)

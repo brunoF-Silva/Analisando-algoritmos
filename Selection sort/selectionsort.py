@@ -25,31 +25,12 @@ def selection_sort(vetor):
     return trocas, comparacoes
 
 nome_algoritmo = "Selection sort"
-analisa_algoritmo('1000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('10000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('100000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('200000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('300000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('400000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('500000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('600000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('700000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('800000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('900000.txt', selection_sort, nome_algoritmo)
-analisa_algoritmo('1000000.txt', selection_sort, nome_algoritmo)
+folder_path = './Vetores desordenados'
+metricas = []
 
-#Plotando o gráfico com os resultados
-caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
-resultados_lidos = ler_resultados(caminho)
-print(resultados_lidos)
-plotar_grafico(resultados_lidos, "Tempo de execução (s)")
+for file_name in os.listdir(folder_path):
+    if file_name.endswith('.txt'):
+        file_path = os.path.join(folder_path, file_name)
+        metricas.append(analisa_algoritmo(file_name, selection_sort, nome_algoritmo))
 
-caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
-resultados_lidos = ler_resultados(caminho)
-print(resultados_lidos)
-plotar_grafico(resultados_lidos, "Trocas")
-
-caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
-resultados_lidos = ler_resultados(caminho)
-print(resultados_lidos)
-plotar_grafico(resultados_lidos, "Comparações")
+cria_json(metricas)       

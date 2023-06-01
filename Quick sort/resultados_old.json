@@ -1,0 +1,86 @@
+[
+    {
+        "trocas": 167421,
+        "comparacoes": 2999997,
+        "tempo_execucao": 341.44673585891724,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "1000000.txt"
+    },
+    {
+        "trocas": 630201,
+        "comparacoes": 2699997,
+        "tempo_execucao": 298.4072530269623,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "900000.txt"
+    },
+    {
+        "trocas": 525915,
+        "comparacoes": 2399997,
+        "tempo_execucao": 691.8376760482788,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "800000.txt"
+    },
+    {
+        "trocas": 126021,
+        "comparacoes": 899997,
+        "tempo_execucao": 28.948882818222046,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "300000.txt"
+    },
+    {
+        "trocas": 88191,
+        "comparacoes": 599997,
+        "tempo_execucao": 13.830413103103638,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "200000.txt"
+    },
+    {
+        "trocas": 258840,
+        "comparacoes": 1199997,
+        "tempo_execucao": 55.665576219558716,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "400000.txt"
+    },
+    {
+        "trocas": 57495,
+        "comparacoes": 1499997,
+        "tempo_execucao": 92.32777905464172,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "500000.txt"
+    },
+    {
+        "trocas": 74448,
+        "comparacoes": 299997,
+        "tempo_execucao": 3.868048906326294,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "100000.txt"
+    },
+    {
+        "trocas": 24,
+        "comparacoes": 2997,
+        "tempo_execucao": 0.0020799636840820312,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "1000.txt"
+    },
+    {
+        "trocas": 390366,
+        "comparacoes": 2099997,
+        "tempo_execucao": 180.6602919101715,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "700000.txt"
+    },
+    {
+        "trocas": 6711,
+        "comparacoes": 29997,
+        "tempo_execucao": 0.05325913429260254,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "10000.txt"
+    },
+    {
+        "trocas": 443715,
+        "comparacoes": 1799997,
+        "tempo_execucao": 132.5490608215332,
+        "nome_algoritmo": "Quick sort",
+        "nome_vetor": "600000.txt"
+    }
+]

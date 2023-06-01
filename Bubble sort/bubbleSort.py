@@ -5,43 +5,38 @@ d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 from funcoes import *
+from gerarchart import *
 
-def bubble_sort(vetor):
-    comparações = 0
+def bubbleSort(array):
+    comparacoes = 0
     trocas = 0
-
-    for i in range(len(vetor) - 1):
-        for j in range(len(vetor) - 1 - i):
-            comparações += 1
-            if vetor[j] > vetor[j + 1]:
-                vetor[j], vetor[j + 1] = vetor[j + 1], vetor[j]
+    for i in range(len(array)):
+        
+        swapped = False
+    
+        for j in range(0, len(array) - i - 1):
+            comparacoes += 1
+            if array[j] > array[j + 1]:
                 trocas += 1
+                temp = array[j]
+                array[j] = array[j+1]
+                array[j+1] = temp
 
-    return trocas, comparações
+                swapped = True
+                
+        if not swapped:
+            break
+    return trocas, comparacoes
 
 nome_algoritmo = "Bubble sort"
-# analisa_algoritmo('1000.txt', bubble_sort, nome_algoritmo)
-# analisa_algoritmo('10000.txt', bubble_sort, nome_algoritmo)
-# analisa_algoritmo('100000.txt', bubble_sort, nome_algoritmo)
-# analisa_algoritmo('200000.txt', bubble_sort, nome_algoritmo)
-#analisa_algoritmo('300000.txt', bubble_sort, nome_algoritmo)
-#analisa_algoritmo('400000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('500000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('600000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('700000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('800000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('900000.txt', bubble_sort, nome_algoritmo)
-analisa_algoritmo('1000000.txt', bubble_sort, nome_algoritmo)
+folder_path = './Vetores desordenados'
+metricas = []
 
-#Plotando o gráfico com os resultados
-caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Tempo de execução (s)")
+for file_name in os.listdir(folder_path):
+    if file_name.endswith('.txt'):
+        file_path = os.path.join(folder_path, file_name)
+        metricas.append(analisa_algoritmo(file_name, bubbleSort, nome_algoritmo))
 
-caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Trocas")
-
-caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Comparações")
+cria_json(metricas)
+geraCharts()
+     

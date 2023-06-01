@@ -5,6 +5,7 @@ d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 from funcoes import *
+from gerarchart import *
 
 ### algoritmo abaixo
 def heapify(vetor, n, i, comparações, trocas):
@@ -45,18 +46,13 @@ def heap_sort(vetor):
     return trocas, comparações
 
 nome_algoritmo = "Heap sort"
-analisa_algoritmo('1000.txt', heap_sort, nome_algoritmo)
-analisa_algoritmo('10000.txt', heap_sort, nome_algoritmo)
+folder_path = '../Vetores desordenados'
+metricas = []
 
-#Plotando o gráfico com os resultados
-caminho = os.path.join(nome_algoritmo, "resultados_tempo.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Tempo de execução (s)")
-
-caminho = os.path.join(nome_algoritmo, "resultados_trocas.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Trocas")
-
-caminho = os.path.join(nome_algoritmo, "resultados_comparacoes.json")
-resultados_lidos = ler_resultados(caminho)
-plotar_grafico(resultados_lidos, "Comparações")
+for file_name in os.listdir(folder_path):
+    if file_name.endswith('.txt'):
+        file_path = os.path.join(folder_path, file_name)
+        metricas.append(analisa_algoritmo(file_name, heap_sort, nome_algoritmo))
+        
+cria_json(metricas)
+geraCharts()
